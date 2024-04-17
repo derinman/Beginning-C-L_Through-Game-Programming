@@ -4,13 +4,13 @@
 /*
 Create an empty Tic-Tac-Toe board Display the game instructions Determine who goes first
 Display the board
-While nobody’s won and it’s not a tie 
+While nobody’s won and it’s not a tie
     If it’s the human’s turn
         Get the human’s move
-        Update the board with the human’s move 
+        Update the board with the human’s move
     Otherwise
         Calculate the computer’s move
-        Update the board with the computer’s move 
+        Update the board with the computer’s move
     Display the board
     Switch turns
 Congratulate the winner or declare a tie
@@ -33,18 +33,18 @@ const char NO_ONE = 'N';
 // function prototypes
 void instructions();
 char askYesNo(string question);
-int askNumber(string question, int high, int low = 0); 
+int askNumber(string question, int high, int low = 0);
 char humanPiece();
 char opponent(char piece);
-void displayBoard(const vector<char>& board);
-char winner(const vector<char>& board);
-bool isLegal(const vector<char>& board, int move);
-int humanMove(const vector<char>& board, char human);
+void displayBoard(const vector<char> &board);
+char winner(const vector<char> &board);
+bool isLegal(const vector<char> &board, int move);
+int humanMove(const vector<char> &board, char human);
 int computerMove(vector<char> board, char computer);
 void announceWinner(char winner, char computer, char human);
 
 // main function
-int main() 
+int main()
 {
     int move;
     const int NUM_SQUARES = 9;
@@ -71,7 +71,7 @@ int main()
         displayBoard(board);
         turn = opponent(turn);
     }
-    
+
     announceWinner(winner(board), computer, human);
 
     return 0;
@@ -111,8 +111,8 @@ int askNumber(string question, int high, int low)
     int number;
     do
     {
-       cout << question << " (" << low << " - " << high << "): ";
-       cin >> number;
+        cout << question << " (" << low << " - " << high << "): ";
+        cin >> number;
     } while (number > high || number < low);
 
     return number;
@@ -145,7 +145,7 @@ char opponent(char piece)
     }
 }
 
-void displayBoard(const vector<char>& board)
+void displayBoard(const vector<char> &board)
 {
     cout << "\n\t" << board[0] << " | " << board[1] << " | " << board[2];
     cout << "\n\t" << "---------";
@@ -155,43 +155,43 @@ void displayBoard(const vector<char>& board)
     cout << "\n\n";
 }
 
-char winner(const vector<char>& board)
+char winner(const vector<char> &board)
 {
     // all possible winning rows
-    const int WINNING_ROWS[8][3] = { {0, 1, 2},
-                                     {3, 4, 5},
-                                     {6, 7, 8},
-                                     {0, 3, 6},
-                                     {1, 4, 7},
-                                     {2, 5, 8},
-                                     {0, 4, 8},
-                                     {2, 4, 6} };
+    const int WINNING_ROWS[8][3] = {{0, 1, 2},
+                                    {3, 4, 5},
+                                    {6, 7, 8},
+                                    {0, 3, 6},
+                                    {1, 4, 7},
+                                    {2, 5, 8},
+                                    {0, 4, 8},
+                                    {2, 4, 6}};
     const int TOTAL_ROWS = 8;
-    
+
     // if any winnning row has three values that are the same (and not EMPTY)
     // then we have a winner
     for (int row = 0; row < TOTAL_ROWS; row++)
     {
-        if ( (board[WINNING_ROWS[row][0]] != EMPTY) && (board[WINNING_ROWS[row][0]] == board[WINNING_ROWS[row][1]]) && (board[WINNING_ROWS[row][1]] == board[WINNING_ROWS[row][2]]) )
+        if ((board[WINNING_ROWS[row][0]] != EMPTY) && (board[WINNING_ROWS[row][0]] == board[WINNING_ROWS[row][1]]) && (board[WINNING_ROWS[row][1]] == board[WINNING_ROWS[row][2]]))
         {
             return board[WINNING_ROWS[row][0]];
-        } 
+        }
     }
 
     // since nobody has won, check for a tie (no empty squares left)
     if (count(board.begin(), board.end(), EMPTY) == 0)
-    return TIE;
+        return TIE;
 
     // since nobody has won and it isn't a tie, the game ain't over
     return NO_ONE;
 }
 
-inline bool isLegal(int move, const vector<char>& board)
+inline bool isLegal(int move, const vector<char> &board)
 {
     return (board[move] == EMPTY);
 }
 
-int humanMove(const vector<char>& board, char human)
+int humanMove(const vector<char> &board, char human)
 {
     int move = askNumber("Where will you move?", (board.size() - 1));
     while (!isLegal(move, board))
@@ -233,17 +233,17 @@ int computerMove(vector<char> board, char computer)
 
         while (!found && move < board.size())
         {
-           if (isLegal(move, board))
-           {
-               board[move] = human;
-               found = winner(board) == human;
-               board[move] = EMPTY;
-           }
-           
-           if (!found)
-           {
-               move++;
-           }
+            if (isLegal(move, board))
+            {
+                board[move] = human;
+                found = winner(board) == human;
+                board[move] = EMPTY;
+            }
+
+            if (!found)
+            {
+                move++;
+            }
         }
     }
 
@@ -254,7 +254,7 @@ int computerMove(vector<char> board, char computer)
         unsigned int i = 0;
 
         const int BEST_MOVES[] = {4, 0, 2, 6, 8, 1, 3, 5, 7};
-        //pick best open square
+        // pick best open square
         while (!found && i < board.size())
         {
             move = BEST_MOVES[i];

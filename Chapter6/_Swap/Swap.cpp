@@ -6,7 +6,7 @@
 using namespace std;
 
 void badSwap(int x, int y);
-void goodSwap(int& x, int& y);
+void goodSwap(int &x, int &y);
 
 int main()
 {
@@ -35,7 +35,7 @@ void badSwap(int x, int y)
     y = temp;
 }
 
-void goodSwap(int& x, int& y)
+void goodSwap(int &x, int &y)
 {
     int temp = x;
     x = y;
